@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigation } from '../public'
+import { Navigation } from '../Public'
 
 const Header = () => {
     return (

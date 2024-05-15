@@ -1,4 +1,4 @@
-import axiosConfig from '../axios'
+import axiosConfig from '../axiosConfig'
 
 export const apiSendMail = (payload) => new Promise(async (resolve, reject) => {
     try {

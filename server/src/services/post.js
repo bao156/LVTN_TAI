@@ -15,7 +15,7 @@ export const getPostsService = () => new Promise(async (resolve, reject) => {
                 { model: db.Attribute, as: 'attributes', attributes: ['price', 'acreage', 'published', 'hashtag'] },
                 { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone'] },
             ],
-            attributes: ['id', 'title', 'star', 'address', 'description', 'isLiked']
+            attributes: ['id', 'title', 'star', 'address', 'description']
         })
         resolve({
             err: response ? 0 : 1,
@@ -49,7 +49,7 @@ export const getPostsLimitService = (page, { limitPost, order, ...query }, { pri
                 { model: db.Overview, as: 'overviews' },
                 { model: db.Label, as: 'labelData', attributes: { exclude: ['createdAt', 'updatedAt'] } },
             ],
-            attributes: ['id', 'title', 'star', 'address', 'description', 'isLiked']
+            attributes: ['id', 'title', 'star', 'address', 'description']
         })
         resolve({
             err: response ? 0 : 1,

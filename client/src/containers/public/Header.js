@@ -10,9 +10,11 @@ import menuManage from '../../ultils/menuManage';
 import { FaHeart } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { setShowFavorites } from '../../store/actions/post';
+import { saveFavoritePost } from '../../services/favoritePost';
+
 const { AiOutlinePlusCircle, AiOutlineLogout, BsChevronDown } = icons;
 
-const Header = ({}) => {
+const Header = ({ }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
@@ -20,7 +22,7 @@ const Header = ({}) => {
     const { isLoggedIn } = useSelector(state => state.auth);
     const [isShowMenu, setIsShowMenu] = useState(false);
     const { posts } = useSelector(state => state.post); // Get the posts from Redux store
-    
+
     const goLogin = useCallback((flag) => {
         navigate(path.LOGIN, { state: { flag } });
     }, []);
@@ -30,7 +32,16 @@ const Header = ({}) => {
     }, [searchParams.get('page')]);
     const handleShowFavorites = () => {
         dispatch(setShowFavorites(true));  // Dispatch action to set showFavorites to true
-      };
+    };
+
+    const handleSaveFavorite = async () => {
+        try {
+            await saveFavoritePost(); // Gọi service function để thêm favorite post
+            // Nếu cần cập nhật UI hoặc trạng thái, bạn có thể dispatch actions ở đây
+        } catch (error) {
+            console.error('Error adding favorite post:', error);
+        }
+    };
     return (
         <div ref={headerRef} className='w-3/5 '>
             <div className='w-full  flex items-center justify-between'>
@@ -59,16 +70,8 @@ const Header = ({}) => {
                             />
                         </div>
                     )}
-                    <Link
-                        to='/yeu-thich'
-                        className='text-black font-bold text-lg flex items-center gap-1'
-                        onClick={handleShowFavorites} // Call handleShowFavorites function when clicked
-                    >
-                        <FaHeart /> Yêu thích
-                    </Link>
-
                     {isLoggedIn && (
-                        <div className='flex items-center gap-3 relative'>
+                        <div className='flex items-center gap-3 relative z-10'>
                             <User />
                             <Button
                                 text={'Quản lý tài khoản'}
@@ -121,5 +124,5 @@ const Header = ({}) => {
 
 
 
-  
-  export default Header;
+
+export default Header;

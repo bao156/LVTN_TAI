@@ -18,7 +18,7 @@ const DetailPost = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.post);
   const navigate = useNavigate();
-
+  const { currentData } = useSelector((state) => state.user);
   useEffect(() => {
     postId && dispatch(getPostsLimit({ id: postId }));
   }, [postId, dispatch]);
@@ -88,12 +88,25 @@ const DetailPost = () => {
           </div>
           <div className="mt-8">
             <h3 className="font-semibold text-xl my-4">Thông tin mô tả:</h3>
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
               {posts[0]?.description &&
                 JSON.parse(posts[0]?.description)?.map((item, index) => {
                   return <span key={index}>{item}</span>;
                 })}
+            </div> */}
+            {/* <div className="flex flex-col gap-2">
+              {posts[0]?.description && typeof posts[0]?.description === 'string' && (
+                JSON.parse(posts[0]?.description)?.map((item, index) => {
+                  return <span key={index}>{item}</span>;
+                })
+              )}
+            </div> */}
+            <div className="flex flex-col gap-2">
+              {Array.isArray(posts[0]?.description) && posts[0]?.description.map((item, index) => (
+                <span key={index}>{item}</span>
+              ))}
             </div>
+
           </div>
           <div className="mt-8">
             <h3 className="font-semibold text-xl my-4">Đặc điểm tin đăng:</h3>
@@ -156,10 +169,10 @@ const DetailPost = () => {
 
                     </div> */}
         </div>
-        <Comment />
+        <Comment postId={postId} userId={currentData.id} />
       </div>
       <div className="w-[30%] flex flex-col gap-6">
-        <UserInfor userData={posts[0]?.user} onLikeToggle={handleLikeToggle} />
+        <UserInfor userData={posts[0]?.user} onLikeToggle={handleLikeToggle} userId={currentData.id} />
         <RelatedPost />
         <RelatedPost newPost />
       </div>
