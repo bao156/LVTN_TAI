@@ -10,7 +10,6 @@ import Button from "@mui/material/Button";
 const ManagerPostReservation = () => {
   const [posts, setPosts] = useState([]);
   const [status, setStatus] = useState("0");
-  const [isFetched, setIsFetched] = useState(false);
   useEffect(() => {
     const fetchData = () => {
       if (posts?.length === 0) {
@@ -56,6 +55,7 @@ const ManagerPostReservation = () => {
       await Swal.fire("Đã hủy thành công!", "", "success");
     }
     const reservation = await getPostsReservations();
+    setPosts(reservation.data);
   };
 
   return (

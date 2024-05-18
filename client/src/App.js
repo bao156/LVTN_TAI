@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import ManagerPost from './containers/System/ManagerPost'
 import FavoritePostsPage from './containers/Public/FavoritePostsPage'
+import ManagerPostReservation from './containers/System/ManagerPostReservation'
 
 function App() {
   const dispatch = useDispatch()
@@ -42,6 +43,7 @@ function App() {
         <Route path={path.SYSTEM} element={<System />} >
           <Route path={path.CREATE_POST} element={<CreatePost />} />
           <Route path={path.MANAGER_POST} element={<ManagerPost />} />
+          <Route path={path.MANAGER_POST_RESERVATION} element={<ManagerPostReservation />} />
           <Route path={path.EIDT_ACCOUNT} element={<EditAccount />} />
           <Route path={path.ADMIN_PAGE} element={<AdminPage />} />
         </Route>

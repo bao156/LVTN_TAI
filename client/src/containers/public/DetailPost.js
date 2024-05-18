@@ -176,6 +176,7 @@ const DetailPost = () => {
           userData={posts[0]?.user}
           onLikeToggle={handleLikeToggle}
           userId={currentData.id}
+          postId={postId}
         />
         <RelatedPost />
         <RelatedPost newPost />

@@ -39,7 +39,7 @@ const UserInfor = ({ userData, onLikeToggle, userId, postId }) => {
       if (posts[0]?.id && userId) {
         const response = await getPostsReservationByPostAndUserId({
           userId: userId,
-          postId: posts[0].id,
+          postId: postId,
         });
         if (response) {
           if (response.isApproved === 1) setIsDisable(true);
