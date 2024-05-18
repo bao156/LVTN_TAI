@@ -16,6 +16,12 @@ const menuManage = [
         icon: <MdOutlineLibraryBooks />
     },
     {
+        id: 2,
+        text: 'Quản lý bài đặt',
+        path: '/he-thong/quan-ly-bai-dat',
+        icon: <MdOutlineLibraryBooks />
+    },
+    {
         id: 4,
         text: 'Thông tin tài khoản',
         path: '/he-thong/thong-tin-tai-khoan',

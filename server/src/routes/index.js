@@ -9,6 +9,7 @@ import dictrictRouter from './dictrict'
 import userRouter from './user'
 import commentRouter from './comment'
 import favoritePostRouter from './favoritePost'
+import postReservationRouter from './postReservation'
 // import contactRouter from './contact'
 
 const initRoutes = (app) => {
@@ -23,11 +24,11 @@ const initRoutes = (app) => {
     app.use('/api/v1/user', userRouter)
     app.use('/api/v1/comment', commentRouter)
     app.use('/api/v1/favoritePost', favoritePostRouter)
+    app.use('/api/v1/postReservation', postReservationRouter)
     // app.use('/api/send-email', contactRouter)
 
     return app.use('/', (req, res) => {
         res.send('server on...')
-
     })
 }
 

@@ -1,21 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { apiUserById } from "../../services/user";
+import React from "react";
 
-const CommentSection = ({ content, dateTime, userId }) => {
-  const [nameOfUser, setNameOfUser] = useState("");
-  useEffect(() => {
-    let isApiSubribed = false;
-    const fetchData = async () => {
-      if (!isApiSubribed && userId) {
-        const user = await apiUserById(userId);
-        setNameOfUser(user.data.response.name);
-      }
-    };
-    fetchData();
-    return () => {
-      isApiSubribed = true;
-    };
-  }, []);
+const CommentSection = ({ content, dateTime, nameOfUser }) => {
   return (
     <div style={{ borderTop: "1px solid black" }}>
       <h3>{nameOfUser}</h3>
