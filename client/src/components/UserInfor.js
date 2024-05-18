@@ -16,7 +16,8 @@ import { useState } from "react";
 const { GoDotFill, FaPhoneAlt, SiZalo } = icons;
 const UserInfor = ({ userData, onLikeToggle, userId, postId }) => {
   const { posts } = useSelector((state) => state.post);
-  const [isDisable, setIsDisable] = useState(false);
+  const [isDisable, setIsDisable] = useState(null);
+  const [isReserved, setIsReserved] = useState(false);
   const handleLikeToggle = async (postId, updatedLiked) => {
     onLikeToggle(postId, updatedLiked); // Update the like status in the UI
     if (updatedLiked) {
@@ -31,7 +32,7 @@ const UserInfor = ({ userData, onLikeToggle, userId, postId }) => {
 
   const handleBooking = async (userId, postId) => {
     savePostReservation({ userId, postId, isApproved: false });
-    setIsDisable(true);
+    setIsDisable(false);
   };
 
   useEffect(() => {
@@ -42,8 +43,10 @@ const UserInfor = ({ userData, onLikeToggle, userId, postId }) => {
           postId: postId,
         });
         if (response) {
-          if (response.isApproved === 1) setIsDisable(true);
-          else setIsDisable(false);
+          if (response.isApproved === 1) {
+            setIsDisable(true);
+            setIsReserved(true);
+          } else setIsDisable(false);
         }
       }
     };
@@ -90,17 +93,21 @@ const UserInfor = ({ userData, onLikeToggle, userId, postId }) => {
         <button
           style={{
             fontWeight: 600,
-            color: isDisable ? "gray" : "mediumblue",
+            color: isDisable === null ? "mediumblue" : "gray",
             borderRadius: "5px",
-            backgroundColor: isDisable ? "darkgray" : "cornsilk",
+            backgroundColor: isDisable === null ? "cornsilk" : "darkgray",
             padding: "10px 35px",
           }}
-          disabled={isDisable}
+          disabled={isDisable !== null}
           onClick={() => {
             handleBooking(userId, posts[0].id);
           }}
         >
-          {!isDisable ? "Reservation" : "Reserved"}
+          {isReserved
+            ? "Reserved"
+            : isDisable === false
+            ? "Waiting For Approval"
+            : "Reservation"}
         </button>
       </div>
     </div>
