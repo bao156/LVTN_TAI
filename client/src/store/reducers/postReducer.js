@@ -53,6 +53,29 @@ const postReducer = (state = initState, action) => {
                 ...state,
                 showFavorites: action.payload,
             };
+        case actionTypes.UPDATE_POST_SUCCESS:
+            return {
+                ...state,
+                posts: state.posts.map(post => 
+                    post.id === action.post.id ? action.post : post),
+                    error: null,
+            };
+        case actionTypes.UPDATE_POST_FAILURE:
+            return {
+                ...state,
+                msg: action.msg || 'Failed to update post',
+            };
+        case actionTypes.DELETE_POST_SUCCESS:
+            return {
+                ...state,
+                posts: state.posts.filter(post => post.id !== action.postId),
+                error: null
+            };
+        case actionTypes.DELETE_POST_FAILURE:
+            return {
+                ...state,
+                msg: action.msg || 'Failed to delete post'
+            };
         default:
             return state;
     }

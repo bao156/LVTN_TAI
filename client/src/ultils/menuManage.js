@@ -1,6 +1,6 @@
 import icons from './icons'
 
-const { ImPencil2, MdOutlineLibraryBooks, BiUserPin, FaHeart } = icons
+const { ImPencil2, MdOutlineLibraryBooks, BiUserPin, FaHeart, MdOutlineManageAccounts, MdManageAccounts  } = icons
 
 const menuManage = [
     {
@@ -27,6 +27,6 @@ const menuManage = [
         path: '/yeu-thich',
         icon: <FaHeart />
     },
-]
+ ]
 
 export default menuManage

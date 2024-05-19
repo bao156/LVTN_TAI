@@ -18,6 +18,8 @@ import { FaFacebook } from "react-icons/fa";
 import { CiTwitter } from "react-icons/ci";
 import { FaYoutube } from "react-icons/fa";
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import {MdOutlineManageAccounts } from 'react-icons/md';
+import {MdManageAccounts } from "react-icons/md";
 const icons = {
     AiOutlinePlusCircle,
     GrNext,
@@ -50,7 +52,9 @@ const icons = {
     CiTwitter,
     FaYoutube,
     FaHeart,
-    FaRegHeart
+    FaRegHeart,
+    MdOutlineManageAccounts,
+    MdManageAccounts
 }
 
 export default icons

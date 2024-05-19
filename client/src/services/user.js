@@ -13,7 +13,7 @@ export const apiGetCurrent = () => new Promise(async (resolve, reject) => {
     }
 })
 
-export const apiUserById= (id) => new Promise(async (resolve, reject) => {
+export const apiUserById = (id) => new Promise(async (resolve, reject) => {
     try {
         const response = await axios({
             method: 'get',
@@ -26,29 +26,39 @@ export const apiUserById= (id) => new Promise(async (resolve, reject) => {
         reject(error)
     }
 })
-export const apiUpdateUser = (payload) => new Promise(async (resolve, reject) => {
+export const apiUpdateUser = (payload, userId) => new Promise(async (resolve, reject) => {
     try {
         const response = await axios({
             method: 'put',
-            url: '/api/v1/user/update-user',
-            data: payload
-        })
-        resolve(response)
-
+            url: `/api/v1/user/update-user/${userId}`,
+            data: payload,
+        });
+        resolve(response.data);
     } catch (error) {
-        reject(error)
+        reject(error);
     }
-})
-export const apiDeleteUser = (payload) => new Promise(async (resolve, reject) => {
+});
+export const apiDeleteUser = (userId) => new Promise(async (resolve, reject) => {
     try {
         const response = await axios({
             method: 'delete',
-            url: '/api/v1/user/delete-user',
-            data: payload
-        })
-        resolve(response)
-
+            url: `/api/v1/user/delete-user/${userId}`, 
+        });
+        resolve(response);
     } catch (error) {
-        reject(error)
+        reject(error);
     }
-})
+});
+
+export const apiGetAllUsers = () => new Promise(async (resolve, reject) => {
+    try {
+        const response = await axios({
+            method: 'get',
+            url: '/api/v1/user/get-all',
+        });
+        resolve(response);
+    } catch (error) {
+        reject(error);
+    }
+});
+

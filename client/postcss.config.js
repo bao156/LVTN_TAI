@@ -3,4 +3,9 @@ module.exports = {
     tailwindcss: {},
     autoprefixer: {},
   },
+  resolve: {
+    fallback: {
+      crypto: require.resolve('crypto-browserify')
+    }
+  }
 }

@@ -93,14 +93,33 @@ export const updatePost = async (req, res) => {
         })
     }
 }
-export const deletePost = async (req, res) => {
-    const { postId } = req.query
-    const { id } = req.user
+export const updatePostAdmin = async (req, res) => {
+    const payload = req.body;
+    const { postId } = req.params;
     try {
-        if (!postId || !id) return res.status(400).json({
-            err: 1,
-            msg: 'missing inputs'
-        })
+        if (!postId) {
+            return res.status(400).json({
+                err: 1,
+                msg: 'missing postId',
+            });
+        }
+        const response = await postService.updatePostAdmin(payload, postId);
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).json({
+            err: -1,
+            msg: 'Failed at post controller: ' + error,
+        });
+    }
+};
+export const deletePost = async (req, res) => {
+    const { postId } = req.params
+    // const { id } = req.user
+    try {
+        // if (!postId || !id) return res.status(400).json({
+        //     err: 1,
+        //     msg: 'missing inputs'
+        // })
         const response = await postService.deletePost(postId)
         return res.status(200).json(response)
 
@@ -113,11 +132,11 @@ export const deletePost = async (req, res) => {
 }
 
 export const updatePostLike = async (req, res) => {
-  const { postId, isLiked } = req.body;
-  try {
-    const response = await postService.updatePostLike(postId, isLiked);
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(500).json({ error: true, message: error.message });
-  }
+    const { postId, isLiked } = req.body;
+    try {
+        const response = await postService.updatePostLike(postId, isLiked);
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ error: true, message: error.message });
+    }
 };
