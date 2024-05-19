@@ -1,16 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, User } from '../../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import LOGO from '../../assets/LOGO.jpeg';
-import icons from '../../ultils/icons';
-import { useNavigate, Link, useSearchParams } from 'react-router-dom';
-import { path } from '../../ultils/constant';
-import { useSelector, useDispatch } from 'react-redux';
-import * as actions from '../../store/actions';
-import menuManage from '../../ultils/menuManage';
-import { FaHeart } from 'react-icons/fa';
-import { connect } from 'react-redux';
-import { setShowFavorites } from '../../store/actions/post';
+import { Button, User } from '../../components';
 import { saveFavoritePost } from '../../services/favoritePost';
+import * as actions from '../../store/actions';
+import { setShowFavorites } from '../../store/actions/post';
+import { path } from '../../ultils/constant';
+import icons from '../../ultils/icons';
+import menuManage from '../../ultils/menuManage';
 
 const { AiOutlinePlusCircle, AiOutlineLogout, BsChevronDown } = icons;
 
@@ -21,8 +19,7 @@ const Header = ({ }) => {
     const headerRef = useRef();
     const { isLoggedIn } = useSelector(state => state.auth);
     const [isShowMenu, setIsShowMenu] = useState(false);
-    const { posts } = useSelector(state => state.post); // Get the posts from Redux store
-
+    const { currentData } = useSelector((state) => state.user);
     const goLogin = useCallback((flag) => {
         navigate(path.LOGIN, { state: { flag } });
     }, []);
@@ -84,7 +81,7 @@ const Header = ({ }) => {
                             {isShowMenu && (
                                 <div className='absolute min-w-200 top-full bg-white shadow-md rounded-md p-4 right-0 flex flex-col'>
                                     {menuManage.map(item => {
-                                        return (
+                                        return (item.isAdmin === 0 || (item.isAdmin === 1 && currentData.isAdmin === 1)) && (
                                             <Link
                                                 className='hover:text-orange-500 flex items-center gap-2 text-blue-600 border-b border-gray-200 py-2'
                                                 key={item.id}

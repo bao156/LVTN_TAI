@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes'
-import { apiGetNewPosts, apiGetPosts, apiGetPostsLimit, apiGetPostsLimitAdmin, apiUpdatePostLikeStatus } from '../../services/post'
+import { apiGetNewPosts, apiGetPosts, apiGetPostsLimit, apiGetPostsLimitAdmin, apiUpdatePostLikeStatus, apiDeletePost, apiUpdatePostAdmin } from '../../services/post'
 
 export const getPosts = () => async (dispatch) => {
     try {
@@ -11,14 +11,14 @@ export const getPosts = () => async (dispatch) => {
             })
         } else {
             dispatch({
-                type: actionTypes.GET_POSTS,
+                type: actionTypes.POST_OPERATION_FAILED,
                 msg: response.data.msg
             })
         }
 
     } catch (error) {
         dispatch({
-            type: actionTypes.GET_POSTS,
+            type: actionTypes.POST_OPERATION_FAILED,
             posts: null
         })
     }
@@ -161,4 +161,51 @@ export const updatePostLikeStatus = (postId, isLiked) => async (dispatch) => {
 export const setShowFavorites = (showFavorites) => ({
     type: actionTypes.SET_SHOW_FAVORITES,
     payload: showFavorites,
-  });
+});
+
+export const updatePost = (payload, postId) => async (dispatch) => {
+    try {
+        const response = await apiUpdatePostAdmin(payload, postId);
+        if (response?.err === 0) {
+            dispatch({
+                type: actionTypes.UPDATE_POST_SUCCESS,
+                msg: 'Post updated successfully',
+                post: response.response,
+            });
+        } else {
+            dispatch({
+                type: actionTypes.UPDATE_POST_FAILURE,
+                msg: response.msg || 'Failed to update post',
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: actionTypes.UPDATE_POST_FAILURE,
+            msg: 'Failed to update post: ' + error.message,
+        });
+    }
+};
+
+
+export const deletePost = (postId) => async (dispatch) => {
+    try {
+        const response = await apiDeletePost(postId);
+        if (response?.data.err === 0) {
+            dispatch({
+                type: actionTypes.DELETE_POST_SUCCESS,
+                postId
+            });
+        } else {
+            dispatch({
+                type: actionTypes.DELETE_POST_FAILURE,
+                msg: response.data.msg || 'Failed to delete post'
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: actionTypes.DELETE_POST_FAILURE,
+            msg: 'Failed to delete post: ' + error.message
+        });
+    }
+};
+

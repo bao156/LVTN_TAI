@@ -32,7 +32,6 @@ export const getPostsReservationByPostId = (payload) =>
   new Promise(async (resolve, reject) => {
     try {
       const url = `/api/v1/postReservation/get-by-post-id/${payload.postId}`;
-      console.log(url);
       const response = await axiosConfig({
         method: "get",
         url: url,

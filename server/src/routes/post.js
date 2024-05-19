@@ -12,7 +12,8 @@ router.use(verifyToken)
 router.post('/create-new', postController.createNewPost)
 router.get('/limit-admin', postController.getPostsLimitAdmin)
 router.put('/update-admin', postController.updatePost)
-router.delete('/delete', postController.deletePost)
+router.put('/update-admin/:postId', postController.updatePostAdmin);
+router.delete('/delete/:postId', postController.deletePost)
 
 // New route to handle updating the like
 router.put('/update-like', postController.updatePostLike);

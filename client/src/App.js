@@ -6,9 +6,9 @@ import * as actions from './store/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import ManagerPost from './containers/System/ManagerPost'
-import FavoritePostsPage from './containers/Public/FavoritePostsPage'
+import FavoritePostsPage from './containers/public/FavoritePostsPage'
 import ManagerPostReservation from './containers/System/ManagerPostReservation'
-
+import ManagerUser from './containers/System/ManagerUser'
 function App() {
   const dispatch = useDispatch()
   const { isLoggedIn } = useSelector(state => state.auth)
@@ -44,6 +44,7 @@ function App() {
           <Route path={path.CREATE_POST} element={<CreatePost />} />
           <Route path={path.MANAGER_POST} element={<ManagerPost />} />
           <Route path={path.MANAGER_POST_RESERVATION} element={<ManagerPostReservation />} />
+          <Route path={path.MANAGER_USER} element={<ManagerUser />} />
           <Route path={path.EIDT_ACCOUNT} element={<EditAccount />} />
           <Route path={path.ADMIN_PAGE} element={<AdminPage />} />
         </Route>

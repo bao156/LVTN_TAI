@@ -24,8 +24,6 @@ const Map = (address = '', zoom = 12) => {
         }
         fecthCenter()
     }, [address])
-    console.log(center)
-
     return (
         <div className='w-full h-[300px]'>
             {center && center.length > 0(

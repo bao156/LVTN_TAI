@@ -26,6 +26,11 @@ export const addPostReservation = async (userId, postId, isApproved) => {
           where: { userId, postId },
         }
       );
+      if (isApprovedValue) {
+        await PostReservation.destroy({
+          where: { postId: postId, isApproved: false },
+        });
+      }
       return { success: true, message: "Update Post Reservaion successfully" };
     } else {
       return { success: true, message: "Post Reservaion is available" };

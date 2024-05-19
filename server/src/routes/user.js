@@ -7,9 +7,9 @@ const router = express.Router()
 router.use(verifyToken)
 router.get('/get-current', userController.getCurrent)
 router.get('/get/:userId', userController.getUser)
-router.put('/update-user', userController.updateUser)
-router.delete('/delete-user', userController.deleteUser)
-
+router.put('/update-user/:userId', userController.updateUser)
+router.delete('/delete-user/:userId', userController.deleteUser)
+router.get('/get-all', userController.getAllUsers);
 
 
 export default router

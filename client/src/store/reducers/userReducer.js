@@ -1,7 +1,10 @@
 import actionTypes from "../actions/actionTypes";
 
 const initState = {
-    currentData: {}
+    currentData: {},
+    users: [],
+    loading: false,
+    error: null,
 }
 
 const userReducer = (state = initState, action) => {
@@ -16,7 +19,31 @@ const userReducer = (state = initState, action) => {
                 ...state,
                 currentData: {}
             }
-
+        case actionTypes.FETCH_USERS:
+            return {
+                ...state,
+                users: action.users,
+                error: null,
+            };
+        case actionTypes.UPDATE_USER:
+            return {
+                ...state,
+                users: state.users.map((user) =>
+                    user.id === action.user.id ? action.user : user
+                ),
+                error: null,
+            };
+        case actionTypes.DELETE_USER:
+            return {
+                ...state,
+                users: state.users.filter((user) => user.id !== action.userId),
+                error: null,
+            };
+        case actionTypes.USER_OPERATION_FAILED:
+            return {
+                ...state,
+                error: action.msg,
+            };
 
         default:
             return state;
