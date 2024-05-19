@@ -31,6 +31,22 @@ export const getFavoritePostsByUserId = async (req, res) => {
     }
 };
 
+// Controller function to get favorite posts by userId
+export const getFavoritePostsByUserIdAndPostId = async (req, res) => {
+    try {
+        const { userId, postId } = req.params; // Get userId from request parameters
+        // Call service function to get favorite posts by userId
+        const favoritePosts = await services.getFavoritePostsByUserAndPostId(userId, postId);
+        return res.status(200).json(favoritePosts); // Return favorite posts
+    } catch (error) {
+        console.error('Error getting favorite posts by userId:', error);
+        return res.status(500).json({
+            error: true,
+            message: 'Failed to get favorite posts by userId.'
+        });
+    }
+};
+
 export const deleteFavoritePostsByPostId = async (req, res) => {
     try {
         const { postId } = req.params; // Get userId from request parameters

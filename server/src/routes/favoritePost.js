@@ -11,6 +11,7 @@ const router = express.Router();
 
 router.post('/add', favoritePostController.addPostToFavoritesController);
 router.get('/get/:userId', favoritePostController.getFavoritePostsByUserId); // Route to get favorite posts by user
+router.get('/get-by-user-and-post-id/:userId/:postId', favoritePostController.getFavoritePostsByUserIdAndPostId); // Route to get favorite posts by user
 router.delete('/delete/:postId', favoritePostController.deleteFavoritePostsByPostId);
 
 export default router;

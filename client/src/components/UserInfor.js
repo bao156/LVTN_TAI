@@ -60,7 +60,7 @@ const UserInfor = ({ userData, onLikeToggle, userId, postId }) => {
       }
     };
     fetchData();
-  }, [userId]);
+  }, [userId, postId]);
 
   return (
     <div className="w-full bg-yellow-500 rounded-md flex flex-col items-center p-4 gap-4">
@@ -94,7 +94,6 @@ const UserInfor = ({ userData, onLikeToggle, userId, postId }) => {
             <div key={post.id} className="post" style={{ textAlign: "center" }}>
               <HeartButton
                 postId={post.id}
-                initialLiked={post.isLiked}
                 onLikeToggle={handleLikeToggle}
               />
             </div>
