@@ -53,6 +53,18 @@ export const getFavoritePostsByUserId = (userId) => new Promise(async (resolve, 
     }
 });
 
+// Function to get favorite posts by user ID
+export const getFavoritePostsByUserAndPostId = (userId, postId) => new Promise(async (resolve, reject) => {
+    try {
+        // Find all favorite posts for the given user ID
+        const favoritePosts = await FavoritePost.findOne({ where: { userId: userId, postId:postId },            });
+        resolve(favoritePosts); // Resolve with the array of favorite posts
+    } catch (error) {
+        console.error('Error getting favorite posts:', error);
+        reject('Error getting favorite posts');
+    }
+});
+
 export const deleteFavoritePost = (postId) => new Promise(async (resolve, reject) => {
     try {
         const response = await FavoritePost.destroy({

@@ -27,6 +27,19 @@ export const getFavoritePostsByUserId = (userId) =>
     }
   });
 
+export const getFavoritePostsByUserAndPostId = (userId, postId) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosConfig({
+        method: "get",
+        url: `/api/v1/favoritePost/get-by-user-and-post-id/${userId}/${postId}`,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+
 export const deleteFavoritePostsByPostId = (postId) =>
   new Promise(async (resolve, reject) => {
     try {

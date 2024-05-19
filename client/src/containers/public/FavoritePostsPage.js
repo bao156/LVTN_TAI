@@ -1,8 +1,7 @@
 import React from 'react'
+import { Province } from '../../components'
 import { text } from '../../ultils/constant'
-import { Province, ItemSidebar, RelatedPost } from '../../components'
 import { List, Pagination } from './index'
-import { useSelector } from 'react-redux'
 
 
 const FavoritePostsPage = () => {

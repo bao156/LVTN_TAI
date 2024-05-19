@@ -1,15 +1,29 @@
 // HeartButton.js
 import React, { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
-
-const HeartButton = ({ postId, initialLiked, onLikeToggle }) => {
+import { getFavoritePostsByUserAndPostId } from "../services/favoritePost";
+import { useSelector } from "react-redux";
+const HeartButton = ({ postId, onLikeToggle }) => {
   // Initialize liked status from local storage or use initial value
-  const [liked, setLiked] = useState(initialLiked);
+  const { currentData } = useSelector((state) => state.user);
+  const [liked, setLiked] = useState(false);
 
-  // Update local storage when liked status changes
   useEffect(() => {
-    localStorage.setItem(`liked_${postId}`, JSON.stringify(liked));
-  }, [postId, liked]);
+    const fetchData = async () => {
+      const userId = currentData.id;
+      if (postId && userId) {
+        const favoritePostResponse = await getFavoritePostsByUserAndPostId(
+          userId,
+          postId
+        );
+        console.log(favoritePostResponse?.data);
+        if (favoritePostResponse?.data?.id) {
+          setLiked(true);
+        }
+      }
+    };
+    fetchData();
+  }, [postId, currentData.id]);
 
   const handleLikeToggle = () => {
     // Toggle liked status
