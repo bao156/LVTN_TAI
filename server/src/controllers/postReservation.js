@@ -35,14 +35,11 @@ export const getPostReservationByStatusController = async (req, res) => {
 };
 
 // Controller function to get favorite posts by userId
-export const getPostReservationByPostIdAndUserId = async (req, res) => {
+export const getPostReservationByPostID = async (req, res) => {
   try {
-    const { postId, userId } = req.params; // Get userId from request parameters
+    const { postId } = req.params; // Get userId from request parameters
     // Call service function to get favorite posts by userId
-    const postReservation = await services.getPostReservationsByPostIdAndUserId(
-      postId,
-      userId
-    );
+    const postReservation = await services.getPostReservationsByPostId(postId);
     return res.status(200).json(postReservation); // Return favorite posts
   } catch (error) {
     console.error("Error getting favorite posts by userId:", error);

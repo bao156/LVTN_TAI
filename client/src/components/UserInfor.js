@@ -9,15 +9,18 @@ import icons from "../ultils/icons";
 import HeartButton from "./HeartButton";
 import {
   savePostReservation,
-  getPostsReservationByPostAndUserId,
+  getPostsReservationByPostId,
 } from "../services/postReservation";
 import { useState } from "react";
 
+const RESERVED_TEXT = "Reserved";
+const RESERVATION_TEXT = "Reservation";
+const WAITTING_FOR_APPROVAL_TEXT = "Waiting For Approval";
+const OUT_OF_STOCK_TEXT = "Out of Stock";
 const { GoDotFill, FaPhoneAlt, SiZalo } = icons;
 const UserInfor = ({ userData, onLikeToggle, userId, postId }) => {
   const { posts } = useSelector((state) => state.post);
-  const [isDisable, setIsDisable] = useState(null);
-  const [isReserved, setIsReserved] = useState(false);
+  const [content, setContent] = useState();
   const handleLikeToggle = async (postId, updatedLiked) => {
     onLikeToggle(postId, updatedLiked); // Update the like status in the UI
     if (updatedLiked) {
@@ -32,26 +35,32 @@ const UserInfor = ({ userData, onLikeToggle, userId, postId }) => {
 
   const handleBooking = async (userId, postId) => {
     savePostReservation({ userId, postId, isApproved: false });
-    setIsDisable(false);
+    setContent(WAITTING_FOR_APPROVAL_TEXT);
   };
-
+  const isBookedAble = content === RESERVATION_TEXT;
   useEffect(() => {
     const fetchData = async () => {
-      if (posts[0]?.id && userId) {
-        const response = await getPostsReservationByPostAndUserId({
-          userId: userId,
+      if (postId && userId) {
+        const response = await getPostsReservationByPostId({
           postId: postId,
         });
-        if (response) {
-          if (response.isApproved === 1) {
-            setIsDisable(true);
-            setIsReserved(true);
-          } else setIsDisable(false);
+        if (response?.isApproved === 1) {
+          if (userId === response?.user?.id) {
+            setContent(RESERVED_TEXT);
+          } else {
+            setContent(OUT_OF_STOCK_TEXT);
+          }
+        } else {
+          if (userId === response?.user?.id) {
+            setContent(WAITTING_FOR_APPROVAL_TEXT);
+          } else {
+            setContent(RESERVATION_TEXT);
+          }
         }
       }
     };
     fetchData();
-  }, []);
+  }, [userId]);
 
   return (
     <div className="w-full bg-yellow-500 rounded-md flex flex-col items-center p-4 gap-4">
@@ -93,21 +102,17 @@ const UserInfor = ({ userData, onLikeToggle, userId, postId }) => {
         <button
           style={{
             fontWeight: 600,
-            color: isDisable === null ? "mediumblue" : "gray",
+            color: isBookedAble ? "mediumblue" : "gray",
             borderRadius: "5px",
-            backgroundColor: isDisable === null ? "cornsilk" : "darkgray",
+            backgroundColor: isBookedAble ? "cornsilk" : "darkgray",
             padding: "10px 35px",
           }}
-          disabled={isDisable !== null}
+          disabled={!isBookedAble}
           onClick={() => {
             handleBooking(userId, posts[0].id);
           }}
         >
-          {isReserved
-            ? "Reserved"
-            : isDisable === false
-            ? "Waiting For Approval"
-            : "Reservation"}
+          {content}
         </button>
       </div>
     </div>

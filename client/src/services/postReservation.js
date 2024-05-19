@@ -28,14 +28,14 @@ export const getPostsReservations = (status) =>
     }
   });
 
-export const getPostsReservationByPostAndUserId = (payload) =>
+export const getPostsReservationByPostId = (payload) =>
   new Promise(async (resolve, reject) => {
     try {
-      const url = `/api/v1/postReservation/get-by-post-and-user-id/${payload.postId}/${payload.userId}`;
+      const url = `/api/v1/postReservation/get-by-post-id/${payload.postId}`;
       console.log(url);
       const response = await axiosConfig({
         method: "get",
-        url: `/api/v1/postReservation/get-by-post-and-user-id/${payload.postId}/${payload.userId}`,
+        url: url,
       });
       resolve(response.data);
     } catch (error) {

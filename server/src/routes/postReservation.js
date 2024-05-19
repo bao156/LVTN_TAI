@@ -15,8 +15,8 @@ router.get(
   postReservationController.getPostReservationByStatusController
 );
 router.get(
-  "/get-by-post-and-user-id/:postId/:userId",
-  postReservationController.getPostReservationByPostIdAndUserId
+  "/get-by-post-id/:postId",
+  postReservationController.getPostReservationByPostID
 );
 router.delete('/delete/:postId/:userId', postReservationController.deletePostReservationByPostIdAndUserId);
 

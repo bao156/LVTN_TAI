@@ -82,11 +82,11 @@ export const getPostReservationsByStatus = (status) =>
     }
   });
 
-export const getPostReservationsByPostIdAndUserId = (postId, userId) =>
+export const getPostReservationsByPostId = (postId) =>
   new Promise(async (resolve, reject) => {
     try {
       let postReservations = await PostReservation.findOne({
-        where: { postId: postId, userId: userId },
+        where: { postId: postId },
         raw: true,
         nest: true,
         include: [
@@ -110,7 +110,7 @@ export const getPostReservationsByPostIdAndUserId = (postId, userId) =>
     }
   });
 
-export const deletePostReservation = (postId,userId) =>
+export const deletePostReservation = (postId, userId) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await PostReservation.destroy({
