@@ -28,38 +28,50 @@ export const getCurrent = async (req, res) => {
     }
 }
 export const updateUser = async (req, res) => {
-    const { id } = req.user
-    const payload = req.body
-    try {
-        if (!payload) return res.status(400).json({
-            err: 1,
-            msg: 'missing payload in controller'
-        })
-        const response = await services.updateUser(payload, id)
-        return res.status(200).json(response)
+    const { userId } = req.params;
+    const payload = req.body;
 
+    try {
+        if (!userId) {
+            return res.status(400).json({
+                err: 1,
+                msg: 'Missing userId',
+            });
+        }
+
+        const response = await services.updateUser(payload, userId);
+        return res.status(200).json(response);
     } catch (error) {
         return res.status(500).json({
             err: -1,
-            msg: 'Failed at user controller: ' + error
-        })
+            msg: 'Failed at user controller: ' + error,
+        });
     }
-}
+};
+
 
 export const deleteUser = async (req, res) => {
+    const { userId } = req.params;
     try {
-        const { id } = req.user
-        const payload = req.body
-        if (!payload) return res.status(400).json({
-            err: 1,
-            msg: 'missing payload in controller'
-        })
-
-        const response = await services.deleteUser(id)
-        return res.status(200).json(response)
-    } catch (e) {
-        return res.status(404).json({
-            message: e
-        })
+        const response = await services.deleteUser(userId);
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).json({
+            err: -1,
+            msg: "Failed at user controller: " + error
+        });
     }
-}
+};
+
+export const getAllUsers = async (req, res) => {
+    try {
+        const response = await services.getAllUsers();
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).json({
+            err: -1,
+            msg: "Failed at user controller: " + error
+        });
+    }
+};
+

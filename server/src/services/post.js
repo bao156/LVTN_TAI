@@ -14,6 +14,12 @@ export const getPostsService = () => new Promise(async (resolve, reject) => {
                 { model: db.Image, as: 'images', attributes: ['image'] },
                 { model: db.Attribute, as: 'attributes', attributes: ['price', 'acreage', 'published', 'hashtag'] },
                 { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone'] },
+                {
+                    model: db.Overview,
+                    as: 'overviews',
+                    attributes: ['code', 'area', 'type', 'target', 'bonus', 'created', 'expired']
+                }
+
             ],
             attributes: ['id', 'title', 'star', 'address', 'description']
         })
@@ -264,10 +270,149 @@ export const updatePost = ({ postId, overviewId, imagesId, attributesId, ...body
     }
 })
 
-export const deletePost = (postId) => new Promise(async (resolve, reject) => {
+export const updatePostAdmin = (payload, postId) => new Promise(async (resolve, reject) => {
+    const transaction = await db.sequelize.transaction();
+    try {
+        // Separate the data for posts, overviews, and images
+        const {
+            title,
+            star,
+            labelCode,
+            address,
+            attributesId,
+            categoryCode,
+            priceCode,
+            areaCode,
+            provinceCode,
+            description,
+            dictrictCode,
+            userId,
+            overviewId,
+            imagesId,
+            priceNumber,
+            areaNumber,
+            // Overview attributes
+            code,
+            area,
+            type,
+            target,
+            bonus,
+            created,
+            expired,
+            // Image attributes
+            image,
+            // Other attributes can be added here
+        } = payload;
+
+        const postPayload = {
+            title,
+            star,
+            labelCode,
+            address,
+            attributesId,
+            categoryCode,
+            priceCode,
+            areaCode,
+            provinceCode,
+            description,
+            dictrictCode,
+            userId,
+            overviewId,
+            imagesId,
+            priceNumber,
+            areaNumber,
+        };
+
+        const overviewPayload = {
+            code,
+            area,
+            type,
+            target,
+            bonus,
+            created,
+            expired,
+        };
+
+        const imagePayload = {
+            image,
+        };
+
+        // Update the post
+        const postResponse = await db.Post.update(postPayload, {
+            where: { id: postId },
+            transaction,
+        });
+
+        // Check if the post was updated
+        if (postResponse[0] === 0) {
+            await transaction.rollback();
+            resolve({
+                err: 1,
+                msg: 'Failed to update Post.',
+                response: null,
+            });
+            return;
+        }
+
+        // Update the overview if provided
+        if (overviewId) {
+            const overviewResponse = await db.Overview.update(overviewPayload, {
+                where: { id: overviewId },
+                transaction,
+            });
+
+            // Check if the overview was updated
+            if (overviewResponse[0] === 0) {
+                await transaction.rollback();
+                resolve({
+                    err: 1,
+                    msg: 'Failed to update Overview.',
+                    response: null,
+                });
+                return;
+            }
+        }
+
+        // Update the image if provided
+        if (imagesId) {
+            const imageResponse = await db.Image.update(imagePayload, {
+                where: { id: imagesId },
+                transaction,
+            });
+
+            // Check if the image was updated
+            if (imageResponse[0] === 0) {
+                await transaction.rollback();
+                resolve({
+                    err: 1,
+                    msg: 'Failed to update Image.',
+                    response: null,
+                });
+                return;
+            }
+        }
+
+        // Commit the transaction
+        await transaction.commit();
+        resolve({
+            err: 0,
+            msg: 'Updated successfully',
+            response: payload,
+        });
+    } catch (error) {
+        await transaction.rollback();
+        reject({
+            err: -1,
+            msg: 'Failed to update post, overview, and image: ' + error.message,
+        });
+    }
+});
+
+
+export const deletePost = (id) => new Promise(async (resolve, reject) => {
     try {
         const response = await db.Post.destroy({
-            where: { id: postId },
+            where: { id },
         })
         resolve({
             err: response > 0 ? 0 : 1,

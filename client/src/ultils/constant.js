@@ -16,7 +16,10 @@ export const path = {
     CONTACT: 'lien-he',
     DETAIL: '/chi-tiet/',
     DETAIL_ALL: 'chi-tiet/*',
-    ADMIN_PAGE: 'admin-page/'
+    ADMIN_PAGE: 'admin-page/',
+    USER_MANAGEMENT: 'quan-ly-nguoi-dung',
+    ADMIN_POST_MANAGEMENT:'admin-quan-ly-bai-dang',
+    MANAGER_USER: 'quan-ly-nguoi-dung'
 }
 
 export const text = {

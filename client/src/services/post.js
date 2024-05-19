@@ -98,17 +98,29 @@ export const apiUpdatePost = (payload) => new Promise(async (resolve, reject) =>
             data: payload,
         })
         resolve(response)
-
     } catch (error) {
-        reject(error)
+        reject(error);
     }
-})
+});
+
+export const apiUpdatePostAdmin = (payload, postId) => new Promise(async (resolve, reject) => {
+    try {
+        const response = await axiosConfig({
+            method: 'put',
+            url: `/api/v1/post/update-admin/${postId}`,
+            data: payload,
+        });
+        resolve(response.data);
+    } catch (error) {
+        reject(error);
+    }
+});
+
 export const apiDeletePost = (postId) => new Promise(async (resolve, reject) => {
     try {
         const response = await axiosConfig({
             method: 'delete',
-            url: `/api/v1/post/delete`,
-            params: { postId },
+            url: `/api/v1/post/delete/${postId}`,
         })
         resolve(response)
 

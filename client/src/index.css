@@ -87,6 +87,13 @@ button.slick-arrow::before {
 
 }
 
+
+  .truncate {
+    -webkit-line-clamp: 3; /* Adjust the number of lines */
+    max-width: calc(12 * 1em); /* Adjust the number of words */
+    text-overflow: ellipsis;
+  }
+
 @keyframes slide-right {
     0% {
         -webkit-transform: translateX(0);
