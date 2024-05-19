@@ -9,7 +9,6 @@ export const getPosts = () => async (dispatch) => {
                 type: actionTypes.GET_POSTS,
                 posts: response.data.response
             })
-            console.log(response.data.response);
         } else {
             dispatch({
                 type: actionTypes.POST_OPERATION_FAILED,

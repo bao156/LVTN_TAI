@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { Home, Login, Rental, Homepage, DetailPost, SearchDetail, Contact } from './containers/public'
+import { Home, Login, Rental, Homepage, DetailPost, SearchDetail, Contact } from './containers/Public'
 import { path } from './ultils/constant'
 import { System, CreatePost, EditAccount, AdminPage } from './containers/System'
 import * as actions from './store/actions'
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import ManagerPost from './containers/System/ManagerPost'
 import FavoritePostsPage from './containers/public/FavoritePostsPage'
+import ManagerPostReservation from './containers/System/ManagerPostReservation'
 import ManagerUser from './containers/System/ManagerUser'
 function App() {
   const dispatch = useDispatch()
@@ -42,6 +43,7 @@ function App() {
         <Route path={path.SYSTEM} element={<System />} >
           <Route path={path.CREATE_POST} element={<CreatePost />} />
           <Route path={path.MANAGER_POST} element={<ManagerPost />} />
+          <Route path={path.MANAGER_POST_RESERVATION} element={<ManagerPostReservation />} />
           <Route path={path.MANAGER_USER} element={<ManagerUser />} />
           <Route path={path.EIDT_ACCOUNT} element={<EditAccount />} />
           <Route path={path.ADMIN_PAGE} element={<AdminPage />} />

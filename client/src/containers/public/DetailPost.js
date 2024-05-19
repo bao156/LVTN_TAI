@@ -102,11 +102,11 @@ const DetailPost = () => {
               )}
             </div> */}
             <div className="flex flex-col gap-2">
-              {Array.isArray(posts[0]?.description) && posts[0]?.description.map((item, index) => (
-                <span key={index}>{item}</span>
-              ))}
+              {Array.isArray(posts[0]?.description) &&
+                posts[0]?.description.map((item, index) => (
+                  <span key={index}>{item}</span>
+                ))}
             </div>
-
           </div>
           <div className="mt-8">
             <h3 className="font-semibold text-xl my-4">Đặc điểm tin đăng:</h3>
@@ -172,7 +172,12 @@ const DetailPost = () => {
         <Comment postId={postId} userId={currentData.id} />
       </div>
       <div className="w-[30%] flex flex-col gap-6">
-        <UserInfor userData={posts[0]?.user} onLikeToggle={handleLikeToggle} userId={currentData.id} />
+        <UserInfor
+          userData={posts[0]?.user}
+          onLikeToggle={handleLikeToggle}
+          userId={currentData.id}
+          postId={postId}
+        />
         <RelatedPost />
         <RelatedPost newPost />
       </div>

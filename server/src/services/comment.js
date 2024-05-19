@@ -30,6 +30,15 @@ export const getCommentsByPostId = (postId) =>
         where: {
           postId: postId,
         },
+        raw: true,
+        nest: true,
+        include: [
+          {
+            model: db.User,
+            as: "user",
+            attributes: ["id", "name"],
+          },
+        ],
       });
       resolve(comments); // Resolve with the array of comments
     } catch (error) {

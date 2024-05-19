@@ -12,7 +12,6 @@ const ItemSidebar = ({ title, content, isDouble, type }) => {
     const dispatch = useDispatch()
     const location = useLocation()
     const navigate = useNavigate()
-    // console.log(location);
 
     const formatContent = () => {
         const oddEl = content?.filter((item, index) => index % 2 !== 0)

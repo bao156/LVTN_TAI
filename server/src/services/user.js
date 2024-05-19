@@ -1,26 +1,5 @@
-import { where } from "sequelize";
 import db from "../models";
-import { v4 as generateId } from 'uuid'
 
-// GET CURRENT
-// export const getOne = (id) => new Promise(async (resolve, reject) => {
-//     try {
-//         const response = await db.User.findOne({
-//             where: { id },
-//             raw: true,
-//             attributes: {
-//                 exclude: ['password']
-//             }
-//         })
-//         resolve({
-//             err: response ? 0 : 1,
-//             msg: response ? 'OK' : 'Failed to get User.',
-//             response
-//         })
-//     } catch (error) {
-//         reject(error)
-//     }
-// })
 
 export const getUserByUserId = (userId) => new Promise(async (resolve, reject) => {
     try {
@@ -69,10 +48,11 @@ export const getOne = (id) => new Promise(async (resolve, reject) => {
             where: { id },
             raw: true,
             attributes: {
-                exclude: ['password']
+                exclude: ['password'],
+                include:['isAdmin']
             }
         });
-
+        
         // If the user is found and they are an administrator (isAdmin: true)
         if (user && !user.isAdmin) {
             resolve({
